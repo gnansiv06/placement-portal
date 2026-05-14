@@ -1,17 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import CodeEditor from "./pages/CodeEditor";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import Portfolio from "./Portfolio";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/portfolio" element={<CodeEditor />} />
-        <Route path="/code" element={<CodeEditor />} />
-
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+    </Routes>
   );
 }
 
