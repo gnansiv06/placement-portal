@@ -2,22 +2,15 @@ import { useState } from "react";
 
 function CodeEditor() {
   const [language, setLanguage] = useState("java");
-  const [code, setCode] = useState("");
+  const [output, setOutput] = useState("");
 
-  function handleReset() {
-    setCode("");
-  }
-
-  function handleRun() {
-    alert(`${language.toUpperCase()} code executed (demo mode) 🚀`);
-  }
-
-  const defaultCode = {
+  const codeSamples = {
     java: `class Main {
   public static void main(String[] args) {
     System.out.println("Hello Java");
   }
 }`,
+    python: `print("Hello Python")`,
     cpp: `#include<iostream>
 using namespace std;
 
@@ -25,48 +18,74 @@ int main() {
     cout << "Hello C++";
     return 0;
 }`,
-    python: `print("Hello Python")`,
+    javascript: `console.log("Hello JavaScript");`,
   };
 
+  function handleRun() {
+    if (language === "java") setOutput("Output:\nHello Java");
+    else if (language === "python") setOutput("Output:\nHello Python");
+    else if (language === "cpp") setOutput("Output:\nHello C++");
+    else setOutput("Output:\nHello JavaScript");
+  }
+
+  function handleReset() {
+    setOutput("");
+  }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-white p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6">
 
       <div className="bg-white/10 backdrop-blur-lg p-6 rounded-2xl w-full max-w-3xl">
 
-        {/* Language Buttons */}
-        <div className="flex gap-4 mb-4 flex-wrap">
+        {/* LANGUAGE BUTTONS (JAVA WILL SHOW ALWAYS) */}
+        <div className="flex gap-3 mb-4 flex-wrap">
 
           <button
             onClick={() => setLanguage("java")}
-            className="bg-blue-600 px-4 py-2 rounded-lg"
+            className={`px-4 py-2 rounded-lg ${
+              language === "java" ? "bg-blue-700" : "bg-blue-500"
+            }`}
           >
             Java
           </button>
 
           <button
+            onClick={() => setLanguage("python")}
+            className={`px-4 py-2 rounded-lg ${
+              language === "python" ? "bg-green-700" : "bg-green-500"
+            }`}
+          >
+            Python
+          </button>
+
+          <button
             onClick={() => setLanguage("cpp")}
-            className="bg-purple-600 px-4 py-2 rounded-lg"
+            className={`px-4 py-2 rounded-lg ${
+              language === "cpp" ? "bg-purple-700" : "bg-purple-500"
+            }`}
           >
             C++
           </button>
 
           <button
-            onClick={() => setLanguage("python")}
-            className="bg-green-600 px-4 py-2 rounded-lg"
+            onClick={() => setLanguage("javascript")}
+            className={`px-4 py-2 rounded-lg ${
+              language === "javascript" ? "bg-yellow-600" : "bg-yellow-400"
+            }`}
           >
-            Python
+            JavaScript
           </button>
 
         </div>
 
-        {/* Code Editor */}
+        {/* CODE BOX */}
         <textarea
-          value={code || defaultCode[language]}
-          onChange={(e) => setCode(e.target.value)}
-          className="w-full h-64 p-4 text-black rounded-lg"
-        ></textarea>
+          value={codeSamples[language]}
+          readOnly
+          className="w-full h-64 p-4 text-black rounded-lg font-mono"
+        />
 
-        {/* Buttons */}
+        {/* ACTION BUTTONS */}
         <div className="flex gap-4 mt-4">
 
           <button
@@ -83,6 +102,11 @@ int main() {
             Reset
           </button>
 
+        </div>
+
+        {/* OUTPUT */}
+        <div className="mt-4 bg-black text-green-400 p-4 rounded-lg h-32 overflow-auto">
+          {output || "Output will appear here..."}
         </div>
 
       </div>
