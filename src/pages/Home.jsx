@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex items-center justify-center text-white">
 
@@ -13,7 +17,10 @@ function Home() {
           Resume Builder and Interview Practice.
         </p>
 
-        <button className="mt-8 bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        <button
+          onClick={() => navigate("/portfolio")}
+          className="mt-6 px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg"
+        >
           Get Started
         </button>
 
